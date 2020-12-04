@@ -7,6 +7,7 @@ const { NODE_ENV } = require("./config");
 const ArticlesService = require("./articles-service");
 
 const app = express();
+const jsonParser = express.json();
 
 const morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
@@ -19,6 +20,25 @@ app.get("/articles", (req, res, next) => {
       res.json(articles);
     })
     .catch(next);
+});
+
+app.get("/articles/:article_id", (req, res, next) => {
+  const knexInstance = req.app.get("db");
+  ArticlesService.getById(knexInstance, req.params.article_id)
+    .then((article) => {
+      res.json({
+        id: article.id,
+        title: article.title,
+        style: article.style,
+        content: article.content,
+        date_published: new Date(article.date_published),
+      });
+    })
+    .catch(next);
+});
+
+app.post("/articles", (req, res, next) => {
+  res.status(201).send("stuff");
 });
 
 app.use(function errorHandler(error, req, res, next) {
