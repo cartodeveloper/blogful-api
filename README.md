@@ -13,6 +13,10 @@ Complete the following steps to start a new project (NEW-PROJECT-NAME):
 5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
 6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
 
+## How to seed the database?
+
+- psql -U [user owner] -d [db name] -f [./file with the seed data]
+
 ## Scripts
 
 Start the application `npm start`
